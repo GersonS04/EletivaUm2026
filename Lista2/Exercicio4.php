@@ -10,7 +10,7 @@
 
 <body>
     <div class="container py-3">
-        <h1>Exercício 1 - Soma</h1>
+        <h1>Exercício 4 - Divisão</h1>
         <form method="post">
             <div class="mb-3">
                 <label for="valor1" class="form-label">Informe o primeiro número</label>
@@ -29,9 +29,13 @@
             $valor1 = $_POST['valor1'];
             $valor2 = $_POST['valor2'];
 
-            $resultado = $valor1 + $valor2;
-
-            echo "O resultado é $resultado";
+            if ($valor2 == 0){
+                echo "Não é possivel dividir um número por zero";
+            }
+            else{
+                $resultado = $valor1 / $valor2;
+                echo "O resultado é $resultado";
+            }    
         }
         ?>
 

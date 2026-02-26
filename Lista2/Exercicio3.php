@@ -10,7 +10,7 @@
 
 <body>
     <div class="container py-3">
-        <h1>Exercício 3</h1>
+        <h1>Exercício 3 - Multiplicação</h1>
         <form method="post">
             <div class="mb-3">
                 <label for="valor1" class="form-label">Informe o primeiro número</label>
