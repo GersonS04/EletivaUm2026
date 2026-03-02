@@ -10,7 +10,7 @@
 
 <body>
     <div class="container py-3">
-        <h1>Exercicio 14 - Quilômetros -> Milhas</h1>
+        <h1>Exercício 14 - Quilômetros -> Milhas</h1>
         <form method="post">
             <div class="mb-3">
                 <label for="km" class="form-label">Informe o valor em Quilômetros:</label>

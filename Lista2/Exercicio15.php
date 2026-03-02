@@ -10,23 +10,27 @@
 
 <body>
     <div class="container py-3">
-        <h1>Exercício 13 - Metros -> Centímetros</h1>
+        <h1>Exercício 15 - Calculadora de IMC</h1>
         <form method="post">
             <div class="mb-3">
-                <label for="metros" class="form-label">Informe o valor em metros:</label>
-                <input type="number" id="metros" name="metros" class="form-control" required="">
+                <label for="Peso" class="form-label">Informe o seu peso(kg):</label>
+                <input type="number" id="Peso" name="Peso" class="form-control" step="0.01" required="">
+            </div>
+            <div class="mb-3">
+                <label for="Altura" class="form-label">Informe a sua altura(m):</label>
+                <input type="number" id="Altura" name="Altura" class="form-control" step="0.01" required="">
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
         </form>
-        <?php
+        <?php 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $Metros = $_POST['metros'];
+            $Peso = $_POST['Peso'];
+            $Altura = $_POST['Altura'];
 
-            $Centimetros = $Metros * 100;
+            $Imc = $Peso / ($Altura ** 2);
 
-            echo "$Metros m correspondem a $Centimetros cm.";
-
+            echo "O IMC é de: ". number_format($Imc, 2, '.', ''). "";
         }
         ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
