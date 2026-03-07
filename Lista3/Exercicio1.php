@@ -34,6 +34,26 @@
             </div>
 <button type="submit" class="btn btn-primary">Enviar</button>
 </form>
+<?php
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $x1 = $_POST['x1'];
+    $x2 = $_POST['x2'];
+    $x3 = $_POST['x3'];
+    $x4 = $_POST['x4'];
+    $x5 = $_POST['x5'];
+    $x6 = $_POST['x6'];
+    $x7 = $_POST['x7'];
+
+    $menor = $x1;
+    $posicao = 1;
+
+    if(x2 < x1){
+        $menor = $x2;
+        $posicao = 2;
+    }
+}
+?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </div>
 </body>
