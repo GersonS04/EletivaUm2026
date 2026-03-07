@@ -10,7 +10,7 @@
 
 <body>
   <div class="container py-3">
-    <h1>Atividade 3</h1>
+    <h1>Exercício 1 - Qual o menor dos 7?</h1>
     <form method="post">
       <div class="mb-3">
         <label for="x1" class="form-label">Informe o primeiro valor:</label>
@@ -56,30 +56,31 @@
       $menor = $x1;
       $posicao = 1;
 
-      if ($menor < $x2) {
+      if ($menor > $x2) {
         $menor = $x2;
         $posicao = 2;
       }
-      if ($menor < $x3) {
+      if ($menor > $x3) {
         $menor = $x3;
         $posicao = 3;
       }
-      if ($menor < $x4) {
+      if ($menor > $x4) {
         $menor = $x4;
         $posicao = 4;
       }
-      if ($menor < $x5) {
+      if ($menor > $x5) {
         $menor = $x5;
         $posicao = 5;
       }
-      if ($menor < $x6) {
+      if ($menor > $x6) {
         $menor = $x6;
         $posicao = 6;
       }
-      if ($menor < $x7) {
+      if ($menor > $x7) {
         $menor = $x7;
         $posicao = 7;
       }
+      echo "O menor valor é $menor e foi o $posicao ° valor a ser inserido!";
     }
     ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
