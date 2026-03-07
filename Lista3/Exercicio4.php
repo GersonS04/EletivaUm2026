@@ -23,6 +23,14 @@
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $x1 = $_POST['x1'];
+
+            if ($x1 <= 100) {
+                echo "Produtos abaixo de R$100,00 não recebem alteração no valor";
+            }
+            else {
+                $descontado = $x1 - ($x1 * 0.15);
+                echo "Valor do produto atualizado para: R$ $descontado";
+            }
         }
         ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
