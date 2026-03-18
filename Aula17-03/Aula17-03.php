@@ -5,9 +5,9 @@
     var_dump($mapa1);
     echo "Valor da posição 2".$mapa1[2]."</p>";
 
-    $mapa[1] = "Vanessa";
-    $mapa[2] = "José";
-    $mapa[3] = "Clara";
+    $mapa2[1] = "Vanessa";
+    $mapa2[2] = "José";
+    $mapa2[3] = "Clara";
     print_r($mapa2);
 
     $contatos["Vanessa"] = "123456";
