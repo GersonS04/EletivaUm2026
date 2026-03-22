@@ -4,53 +4,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Exercício 1</title>
+  <title>Atividade 5</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
   <div class="container py-3">
-    <h1>Exercício 1 - Atividade 5</h1>
+    <h1>Exercício 1 - Lista de Contatos ordenados.</h1>
     <form method="post">
       <div class="mb-3">
         <label for="nome[]" class="form-label">Informe o primeiro nome: </label>
-        <input type="text" id="nome[]" name="nome[]" class="form-control" required="">
+        <input type="text" id="nome1[]" name="nome[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="fone[]" class="form-label">Informe o primeiro telefone:</label>
-        <input type="number" id="fone[]" name="fone[]" class="form-control" required="">
+        <input type="number" id="fone1[]" name="fone[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="nome[]" class="form-label">Informe o segundo nome:</label>
-        <input type="text" id="nome[]" name="nome[]" class="form-control" required="">
+        <input type="text" id="nome2[]" name="nome[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="fone[]" class="form-label">Informe o segundo telefone: </label>
-        <input type="number" id="fone[]" name="fone[]" class="form-control" required="">
+        <input type="number" id="fone2[]" name="fone[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="nome[]" class="form-label">Informe o terceiro nome: </label>
-        <input type="text" id="nome[]" name="nome[]" class="form-control" required="">
+        <input type="text" id="nome3[]" name="nome[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="fone[]" class="form-label">Informe o terceiro telefone: </label>
-        <input type="number" id="fone[]" name="fone[]" class="form-control" required="">
+        <input type="number" id="fone3[]" name="fone[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="nome[]" class="form-label">Informe o quarto nome: </label>
-        <input type="text" id="nome[]" name="nome[]" class="form-control" required="">
+        <input type="text" id="nome4[]" name="nome[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="fone[]" class="form-label">Informe o quarto telefone: </label>
-        <input type="number" id="fone[]" name="fone[]" class="form-control" required="">
+        <input type="number" id="fone4[]" name="fone[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="nome[]" class="form-label">Informe o quinto nome: </label>
-        <input type="text" id="nome[]" name="nome[]" class="form-control" required="">
+        <input type="text" id="nome5[]" name="nome[]" class="form-control" required="">
       </div>
       <div class="mb-3">
         <label for="fone[]" class="form-label">Informe o quinto telefone: </label>
-        <input type="number" id="fone[]" name="fone[]" class="form-control" required="">
+        <input type="number" id="fone5[]" name="fone[]" class="form-control" required="">
       </div>
       <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
@@ -62,18 +62,15 @@
       $contatos = [];
       $telefones = [];
 
-      for ($i = 0; $i < count($nome); $i++)
-      {
+      for ($i = 0; $i < count($nome); $i++) {
         $nomeAtual = $nome[$i];
         $foneAtual = $fone[$i];
 
-        if (array_key_exists($nomeAtual, $contatos))
-        {
+        if (array_key_exists($nomeAtual, $contatos)) {
           echo "O Contato '$nomeAtual' já existe!";
           continue;
         }
-        if (in_array($foneAtual, $telefones))
-        {
+        if (in_array($foneAtual, $telefones)) {
           echo "O telefone '$foneAtual' já existe!";
           continue;
         }
@@ -85,11 +82,9 @@
       ksort($contatos);
 
       echo "<p><b>Lista de Contatos (A a Z):</b></p>";
-      foreach ($contatos as $nome => $fone)
-      {
+      foreach ($contatos as $nome => $fone) {
         echo "Nome: $nome - Fone: $fone <br>";
       }
-
     }
     ?>
 
