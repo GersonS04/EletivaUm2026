@@ -85,7 +85,7 @@
             {
                 if ($precos[$i] > 100)
                 {
-                    $precos[$i] = $precos[$i] - ($precos[$i] * 10 / 100);
+                    $precos[$i] = $precos[$i] * 0.90;
                 }
             }
 
