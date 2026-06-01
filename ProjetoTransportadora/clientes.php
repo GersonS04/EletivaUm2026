@@ -31,6 +31,7 @@ try {
     <h2>Clientes</h2>
 
     <a href="novo_cliente.php" class="btn btn-success mb-3">Novo Cliente</a>
+    <a href="principal.php" class="btn btn-secondary mb-3">Voltar</a>
 
     <table class="table table-striped table-hover">
         <thead>

@@ -46,6 +46,7 @@ try {
     <h2>Entregas</h2>
 
     <a href="nova_entrega.php" class="btn btn-success mb-3">Nova Entrega</a>
+    <a href="principal.php" class="btn btn-secondary mb-3">Voltar</a>
 
     <table class="table table-striped table-hover">
         <thead>
