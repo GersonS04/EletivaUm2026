@@ -1,11 +1,6 @@
 <?php
 require("conexao.php");
-session_start();
-
-if (!isset($_SESSION['acesso'])) {
-    header("location: index.php");
-    exit;
-}
+require("cabecalho.php");
 
 try {
 
@@ -24,62 +19,90 @@ try {
     ");
 
     $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage();
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<div class="card shadow-sm">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Entregas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <div class="card-body">
 
-<body class="bg-light">
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-<div class="container mt-4">
+            <h2 class="mb-0">Entregas</h2>
 
-    <h2>Entregas</h2>
+            <a href="nova_entrega.php" class="btn btn-success">
+                + Nova Entrega
+            </a>
 
-    <a href="nova_entrega.php" class="btn btn-success mb-3">Nova Entrega</a>
-    <a href="principal.php" class="btn btn-secondary mb-3">Voltar</a>
+        </div>
 
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cliente</th>
-                <th>Motorista</th>
-                <th>Carga</th>
-                <th>Data</th>
-                <th>Status</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
+        <?php if (count($dados) == 0) { ?>
 
-        <tbody>
-        <?php foreach ($dados as $e) { ?>
-            <tr>
-                <td><?= $e['id'] ?></td>
-                <td><?= $e['cliente'] ?></td>
-                <td><?= $e['motorista'] ?></td>
-                <td><?= $e['carga'] ?></td>
-                <td><?= $e['data_entrega'] ?></td>
-                <td><?= $e['status'] ?></td>
-                <td>
-                    <a href="editar_entrega.php?id=<?= $e['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="consultar_entrega.php?id=<?= $e['id'] ?>" class="btn btn-info btn-sm">Consultar</a>
-                </td>
-            </tr>
+            <div class="alert alert-info">
+                Nenhuma entrega cadastrada.
+            </div>
+
+        <?php } else { ?>
+
+            <table class="table table-hover table-striped align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Motorista</th>
+                        <th>Carga</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <?php foreach ($dados as $e) { ?>
+
+                        <tr>
+
+                            <td><?= $e['id'] ?></td>
+                            <td><?= $e['cliente'] ?></td>
+                            <td><?= $e['motorista'] ?></td>
+                            <td><?= $e['carga'] ?></td>
+                            <td><?= $e['data_entrega'] ?></td>
+                            <td>
+                                <span class="badge bg-secondary">
+                                    <?= $e['status'] ?>
+                                </span>
+                            </td>
+
+                            <td class="d-flex gap-1">
+
+                                <a href="editar_entrega.php?id=<?= $e['id'] ?>"
+                                    class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+
+                                <a href="consultar_entrega.php?id=<?= $e['id'] ?>"
+                                    class="btn btn-info btn-sm">
+                                    Consultar
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    <?php } ?>
+
+                </tbody>
+
+            </table>
+
         <?php } ?>
-        </tbody>
-    </table>
+
+    </div>
 
 </div>
 
-</body>
-</html>
+<?php require("rodape.php"); ?>

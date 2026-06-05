@@ -2,32 +2,44 @@
 require("conexao.php");
 require("cabecalho.php");
 
-/* BUSCAR CLIENTE */
+/* BUSCAR CARGA */
 try {
-    $stmt = $pdo->prepare("SELECT * FROM cliente WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM carga WHERE id = ?");
     $stmt->execute([$_GET['id']]);
-    $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+    $carga = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
     echo "Erro: " . $e->getMessage();
 }
 
-/* EXCLUIR CLIENTE */
+/* EXCLUIR CARGA */
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $id = $_POST['id'];
 
     try {
-        $stmt = $pdo->prepare("DELETE FROM cliente WHERE id = ?");
+
+        $stmt = $pdo->prepare("DELETE FROM carga WHERE id = ?");
 
         if ($stmt->execute([$id])) {
-            header("location: clientes.php?excluir=true");
+            header("location: cargas.php?excluir=true");
             exit;
         } else {
-            header("location: clientes.php?excluir=false");
+            header("location: cargas.php?excluir=false");
             exit;
         }
-    } catch (Exception $e) {
-        echo "Erro: " . $e->getMessage();
+    } catch (PDOException $e) {
+
+        if ($e->getCode() == 23000) {
+
+            echo "
+            <div class='container'>
+                <div class='alert alert-danger mt-3'>
+                    Não é possível excluir esta carga porque ela está vinculada a uma entrega.
+                </div>
+            </div>";
+        } else {
+            echo "Erro: " . $e->getMessage();
+        }
     }
 }
 ?>
@@ -36,30 +48,34 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     <div class="card-body">
 
-        <h2 class="mb-4">Consultar Cliente</h2>
+        <h2 class="mb-4">Consultar Carga</h2>
 
         <form method="POST" id="formExcluir">
 
-            <input type="hidden" name="id" value="<?= $cliente['id'] ?>">
+            <input type="hidden" name="id" value="<?= $carga['id'] ?>">
 
             <div class="mb-3">
-                <label class="form-label">Nome</label>
-                <input type="text" value="<?= $cliente['nome'] ?>" class="form-control" disabled>
+                <label class="form-label">Descrição</label>
+                <input type="text"
+                    class="form-control"
+                    value="<?= $carga['descricao'] ?>"
+                    disabled>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">CPF</label>
-                <input type="text" value="<?= $cliente['cpf'] ?>" class="form-control" disabled>
+                <label class="form-label">Peso (Kg)</label>
+                <input type="text"
+                    class="form-control"
+                    value="<?= $carga['peso'] ?>"
+                    disabled>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Telefone</label>
-                <input type="text" value="<?= $cliente['telefone'] ?>" class="form-control" disabled>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="text" value="<?= $cliente['email'] ?>" class="form-control" disabled>
+                <label class="form-label">Valor do Frete</label>
+                <input type="text"
+                    class="form-control"
+                    value="R$ <?= number_format($carga['valor_frete'], 2, ',', '.') ?>"
+                    disabled>
             </div>
 
             <div class="d-flex gap-2 mt-4">
@@ -71,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     Excluir
                 </button>
 
-                <a href="clientes.php" class="btn btn-secondary">
+                <a href="cargas.php" class="btn btn-secondary">
                     Voltar
                 </a>
 
@@ -83,8 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 </div>
 
-<!-- Modal de confirmação -->
-<div class="modal fade" id="modalExcluir" tabindex="-1" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="modalExcluir" tabindex="-1">
 
     <div class="modal-dialog modal-dialog-centered">
 
@@ -105,9 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
             <div class="modal-body">
 
-                Tem certeza que deseja excluir este cliente?
+                Tem certeza que deseja excluir esta carga?
 
-                <div class="mt-2 text-muted">
+                <div class="text-muted mt-2">
                     Esta ação não poderá ser desfeita.
                 </div>
 

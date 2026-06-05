@@ -1,6 +1,6 @@
 <?php
 require("conexao.php");
-session_start();
+require("cabecalho.php");
 
 if (!isset($_SESSION['acesso'])) {
     header("location: index.php");
@@ -12,6 +12,7 @@ $clientes = $pdo->query("SELECT * FROM cliente")->fetchAll(PDO::FETCH_ASSOC);
 $motoristas = $pdo->query("SELECT * FROM motorista")->fetchAll(PDO::FETCH_ASSOC);
 $cargas = $pdo->query("SELECT * FROM carga")->fetchAll(PDO::FETCH_ASSOC);
 
+/* INSERT */
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $cliente = $_POST['cliente'];
@@ -40,74 +41,69 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<div class="container">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Nova Entrega</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <div class="card shadow-sm">
 
-<body class="bg-light">
+        <div class="card-body">
 
-    <div class="container mt-4">
+            <h2 class="mb-4">Nova Entrega</h2>
 
-        <h2>Nova Entrega</h2>
+            <form method="POST">
 
-        <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Cliente</label>
+                    <select name="cliente" class="form-control" required>
+                        <option value="">Selecione</option>
+                        <?php foreach ($clientes as $c) { ?>
+                            <option value="<?= $c['id'] ?>"><?= $c['nome'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label>Cliente</label>
-                <select name="cliente" class="form-control" required>
-                    <option value="">Selecione</option>
-                    <?php foreach ($clientes as $c) { ?>
-                        <option value="<?= $c['id'] ?>"><?= $c['nome'] ?></option>
-                    <?php } ?>
-                </select>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Motorista</label>
+                    <select name="motorista" class="form-control" required>
+                        <option value="">Selecione</option>
+                        <?php foreach ($motoristas as $m) { ?>
+                            <option value="<?= $m['id'] ?>"><?= $m['nome'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label>Motorista</label>
-                <select name="motorista" class="form-control" required>
-                    <option value="">Selecione</option>
-                    <?php foreach ($motoristas as $m) { ?>
-                        <option value="<?= $m['id'] ?>"><?= $m['nome'] ?></option>
-                    <?php } ?>
-                </select>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Carga</label>
+                    <select name="carga" class="form-control" required>
+                        <option value="">Selecione</option>
+                        <?php foreach ($cargas as $c) { ?>
+                            <option value="<?= $c['id'] ?>"><?= $c['descricao'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label>Carga</label>
-                <select name="carga" class="form-control" required>
-                    <option value="">Selecione</option>
-                    <?php foreach ($cargas as $c) { ?>
-                        <option value="<?= $c['id'] ?>"><?= $c['descricao'] ?></option>
-                    <?php } ?>
-                </select>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Data da Entrega</label>
+                    <input type="date" name="data" class="form-control" required>
+                </div>
 
-            <div class="mb-3">
-                <label>Data da Entrega</label>
-                <input type="date" name="data" class="form-control" required>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-control" required>
+                        <option value="Pendente">Pendente</option>
+                        <option value="Em trânsito">Em trânsito</option>
+                        <option value="Entregue">Entregue</option>
+                    </select>
+                </div>
 
-            <div class="mb-3">
-                <label>Status</label>
-                <select name="status" class="form-control" required>
-                    <option value="Pendente">Pendente</option>
-                    <option value="Em trânsito">Em trânsito</option>
-                    <option value="Entregue">Entregue</option>
-                </select>
-            </div>
+                <button class="btn btn-success">Salvar</button>
+                <a href="entregas.php" class="btn btn-secondary">Voltar</a>
 
-            <button class="btn btn-success">Salvar</button>
-            <a href="entregas.php" class="btn btn-secondary">Voltar</a>
+            </form>
 
-        </form>
+        </div>
 
     </div>
 
-</body>
+</div>
 
-</html>
+<?php require("rodape.php"); ?>

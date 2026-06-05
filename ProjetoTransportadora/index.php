@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario && password_verify($senha, $usuario['senha'])) {
+
             $_SESSION['acesso'] = true;
             $_SESSION['nome'] = $usuario['nome'];
 
@@ -34,40 +35,67 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login - Transportadora</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
 
-    <div class="container mt-5" style="max-width: 400px;">
+    <div class="container">
 
-        <h3 class="mb-3">Login do Sistema</h3>
+        <div class="row justify-content-center align-items-center" style="height: 100vh;">
 
-        <?php if (isset($erro)) { ?>
-            <div class="alert alert-danger">
-                <?= $erro ?>
+            <div class="col-md-4">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-body">
+
+                        <h2 class="text-center mb-2">🚚 Transportadora</h2>
+
+                        <p class="text-center text-muted mb-4">
+                            Login do Sistema
+                        </p>
+
+                        <?php if (isset($erro)) { ?>
+                            <div class="alert alert-danger">
+                                <?= $erro ?>
+                            </div>
+                        <?php } ?>
+
+                        <form method="POST">
+
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Senha</label>
+                                <input type="password" name="senha" class="form-control" required>
+                            </div>
+
+                            <button class="btn btn-primary w-100">
+                                Entrar
+                            </button>
+
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <small>
+                                Não tem conta?
+                                <a href="cadastro.php">Criar conta</a>
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-        <?php } ?>
 
-        <form method="POST">
-
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Senha</label>
-                <input type="password" name="senha" class="form-control" required>
-            </div>
-
-            <button class="btn btn-primary w-100">Entrar</button>
-
-        </form>
-
-        <p class="mt-3 text-center">
-            Não tem conta? <a href="cadastro.php">Cadastrar</a>
-        </p>
+        </div>
 
     </div>
 

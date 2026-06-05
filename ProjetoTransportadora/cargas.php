@@ -1,11 +1,6 @@
 <?php
 require("conexao.php");
-session_start();
-
-if (!isset($_SESSION['acesso'])) {
-    header("location: index.php");
-    exit;
-}
+require("cabecalho.php");
 
 try {
     $stmt = $pdo->query("SELECT * FROM carga");
@@ -15,52 +10,77 @@ try {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<div class="card shadow-sm">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Cargas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <div class="card-body">
 
-<body class="bg-light">
+        <div class="d-flex justify-content-between align-items-center mb-3">
 
-<div class="container mt-4">
+            <h2 class="mb-0">Cargas</h2>
 
-    <h2>Cargas</h2>
+            <a href="nova_carga.php" class="btn btn-success">
+                + Nova Carga
+            </a>
 
-    <a href="nova_carga.php" class="btn btn-success mb-3">Nova Carga</a>
-    <a href="principal.php" class="btn btn-secondary mb-3">Voltar</a>
+        </div>
 
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Descrição</th>
-                <th>Peso</th>
-                <th>Valor do Frete</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
+        <?php if (count($dados) == 0) { ?>
 
-        <tbody>
-        <?php foreach ($dados as $c) { ?>
-            <tr>
-                <td><?= $c['id'] ?></td>
-                <td><?= $c['descricao'] ?></td>
-                <td><?= $c['peso'] ?></td>
-                <td><?= $c['valor_frete'] ?></td>
-                <td>
-                    <a href="editar_carga.php?id=<?= $c['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="consultar_carga.php?id=<?= $c['id'] ?>" class="btn btn-info btn-sm">Consultar</a>
-                </td>
-            </tr>
+            <div class="alert alert-info">
+                Nenhuma carga cadastrada.
+            </div>
+
+        <?php } else { ?>
+
+            <table class="table table-hover table-striped align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Descrição</th>
+                        <th>Peso (Kg)</th>
+                        <th>Valor do Frete</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <?php foreach ($dados as $c) { ?>
+
+                        <tr>
+
+                            <td><?= $c['id'] ?></td>
+                            <td><?= $c['descricao'] ?></td>
+                            <td><?= $c['peso'] ?></td>
+                            <td>R$ <?= number_format($c['valor_frete'], 2, ',', '.') ?></td>
+
+                            <td class="d-flex gap-1">
+
+                                <a href="editar_carga.php?id=<?= $c['id'] ?>"
+                                    class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+
+                                <a href="consultar_carga.php?id=<?= $c['id'] ?>"
+                                    class="btn btn-info btn-sm">
+                                    Consultar
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    <?php } ?>
+
+                </tbody>
+
+            </table>
+
         <?php } ?>
-        </tbody>
-    </table>
+
+    </div>
 
 </div>
 
-</body>
-</html>
+<?php require("rodape.php"); ?>

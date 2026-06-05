@@ -1,77 +1,161 @@
 <?php
 require("conexao.php");
-session_start();
+require("cabecalho.php");
 
 if (!isset($_SESSION['acesso'])) {
     header("location: index.php");
     exit;
 }
 
-/* BUSCAR */
+/* BUSCAR ENTREGA */
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
-    $stmt = $pdo->prepare("
-        SELECT e.*, c.nome AS cliente, m.nome AS motorista, ca.descricao AS carga
-        FROM entrega e
-        JOIN cliente c ON c.id = e.cliente_id
-        JOIN motorista m ON m.id = e.motorista_id
-        JOIN carga ca ON ca.id = e.carga_id
-        WHERE e.id = ?
-    ");
+    try {
 
-    $stmt->execute([$_GET['id']]);
-    $entrega = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $pdo->prepare("
+            SELECT e.*, c.nome AS cliente, m.nome AS motorista, ca.descricao AS carga
+            FROM entrega e
+            JOIN cliente c ON c.id = e.cliente_id
+            JOIN motorista m ON m.id = e.motorista_id
+            JOIN carga ca ON ca.id = e.carga_id
+            WHERE e.id = ?
+        ");
+
+        $stmt->execute([$_GET['id']]);
+        $entrega = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo "Erro: " . $e->getMessage();
+    }
 }
 
-/* EXCLUIR */
+/* EXCLUIR ENTREGA */
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $id = $_POST['id'];
 
-    $stmt = $pdo->prepare("DELETE FROM entrega WHERE id = ?");
+    try {
 
-    if ($stmt->execute([$id])) {
-        header("location: entregas.php?excluir=true");
-        exit;
-    } else {
-        header("location: entregas.php?excluir=false");
-        exit;
+        $stmt = $pdo->prepare("DELETE FROM entrega WHERE id = ?");
+
+        if ($stmt->execute([$id])) {
+            header("location: entregas.php?excluir=true");
+            exit;
+        } else {
+            header("location: entregas.php?excluir=false");
+            exit;
+        }
+    } catch (Exception $e) {
+        echo "Erro: " . $e->getMessage();
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Consultar Entrega</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body class="bg-light">
-
 <div class="container mt-4">
 
-    <h2>Consultar Entrega</h2>
+    <div class="card shadow-sm">
 
-    <form method="POST">
+        <div class="card-body">
 
-        <input type="hidden" name="id" value="<?= $entrega['id'] ?>">
+            <h2 class="mb-4">Consultar Entrega</h2>
 
-        <p><strong>Cliente:</strong> <?= $entrega['cliente'] ?></p>
-        <p><strong>Motorista:</strong> <?= $entrega['motorista'] ?></p>
-        <p><strong>Carga:</strong> <?= $entrega['carga'] ?></p>
-        <p><strong>Data:</strong> <?= $entrega['data_entrega'] ?></p>
-        <p><strong>Status:</strong> <?= $entrega['status'] ?></p>
+            <form method="POST" id="formExcluir">
 
-        <p>Deseja excluir esta entrega?</p>
+                <input type="hidden" name="id" value="<?= $entrega['id'] ?>">
 
-        <button class="btn btn-danger">Excluir</button>
-        <a href="entregas.php" class="btn btn-secondary">Voltar</a>
+                <div class="mb-3">
+                    <label class="form-label">Cliente</label>
+                    <input type="text" class="form-control" value="<?= $entrega['cliente'] ?>" disabled>
+                </div>
 
-    </form>
+                <div class="mb-3">
+                    <label class="form-label">Motorista</label>
+                    <input type="text" class="form-control" value="<?= $entrega['motorista'] ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Carga</label>
+                    <input type="text" class="form-control" value="<?= $entrega['carga'] ?>" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Data da Entrega</label>
+                    <input type="text"
+                        class="form-control"
+                        value="<?= date('d/m/Y', strtotime($entrega['data_entrega'])) ?>"
+                        disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <input type="text"
+                        class="form-control"
+                        value="<?= ucfirst($entrega['status']) ?>"
+                        disabled>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalExcluir">
+                        Excluir
+                    </button>
+
+                    <a href="entregas.php" class="btn btn-secondary">
+                        Voltar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
-</body>
-</html>
+<!-- Modal -->
+<div class="modal fade" id="modalExcluir" tabindex="-1">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body">
+                Tem certeza que deseja excluir esta entrega?
+                <div class="text-muted mt-2">
+                    Esta ação não poderá ser desfeita.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn btn-danger"
+                    onclick="document.getElementById('formExcluir').submit();">
+                    Sim, excluir
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<?php require("rodape.php"); ?>

@@ -1,0 +1,55 @@
+/* Fundo geral */
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Títulos */
+h1, h2, h3, h4 {
+    color: #1e3a5f;
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+    border-radius: 10px;
+}
+
+/* Botões */
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* Botão principal */
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+/* Tabelas */
+.table {
+    background: white;
+}
+
+.table thead {
+    background-color: #1e3a5f;
+    color: white;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+}

@@ -1,5 +1,6 @@
 <?php
 require("conexao.php");
+
 session_start();
 
 if (!isset($_SESSION['acesso'])) {
@@ -34,50 +35,56 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php require("cabecalho.php"); ?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Novo Motorista</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+<div class="row justify-content-center">
 
-<body class="bg-light">
+    <div class="col-md-6">
 
-    <div class="container mt-4">
+        <div class="card shadow-sm">
 
-        <h2>Novo Motorista</h2>
+            <div class="card-body">
 
-        <form method="POST">
+                <h2 class="mb-4">Novo Motorista</h2>
 
-            <div class="mb-3">
-                <label>Nome</label>
-                <input type="text" name="nome" class="form-control" required>
+                <form method="POST">
+
+                    <div class="mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" name="nome" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">CNH</label>
+                        <input type="text" name="cnh" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Telefone</label>
+                        <input type="text" name="telefone" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Placa do Veículo</label>
+                        <input type="text" name="placa" class="form-control" required>
+                    </div>
+
+                    <button class="btn btn-success w-100">
+                        Salvar
+                    </button>
+
+                    <a href="motoristas.php" class="btn btn-secondary w-100 mt-2">
+                        Voltar
+                    </a>
+
+                </form>
+
             </div>
 
-            <div class="mb-3">
-                <label>CNH</label>
-                <input type="text" name="cnh" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Telefone</label>
-                <input type="text" name="telefone" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Placa do Veículo</label>
-                <input type="text" name="placa" class="form-control" required>
-            </div>
-
-            <button class="btn btn-success">Salvar</button>
-            <a href="motoristas.php" class="btn btn-secondary">Voltar</a>
-
-        </form>
+        </div>
 
     </div>
 
-</body>
+</div>
 
-</html>
+<?php require("rodape.php"); ?>
